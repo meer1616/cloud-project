@@ -1,0 +1,18 @@
+services:
+  container1:
+    # build: ./SourceCode/container1
+    image: meer2838/container1
+    ports:
+      - "6000:6000"
+    volumes:
+      - .:/app/data/
+    depends_on:
+      - container2
+
+  container2:
+    # build: ./SourceCode/container2
+    image: meer2838/container2
+    ports:
+      - "6001:6001"
+    volumes:
+      - .:/app/data/
