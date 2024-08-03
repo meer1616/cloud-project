@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Creates an S3 bucket, Cognito User Pool, Lambda functions, DynamoDB tables, and API Gateway
+
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: meer-cloud-project
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - "*"
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+            AllowedOrigins:
+              - "*"
+            ExposedHeaders:
+              - "ETag"
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: ExpireOldFiles
+            Status: Enabled
+            ExpirationInDays: 30
