@@ -7,6 +7,7 @@ import { Box, Button, Flex, Input, Text } from '@chakra-ui/react';
 import { CognitoUserAttribute } from 'amazon-cognito-identity-js';
 import userpool from '../config/userpool';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const schema = yup.object().shape({
     email: yup.string().email('Invalid email address').required('Email is required'),
@@ -37,6 +38,11 @@ const SignupPage = () => {
             } else {
                 console.log("signup data", data);
                 alert('User Added Successfully');
+                axios.post(`${process.env.REACT_APP_BASE_URL}/subscribe-email`, { email: email }).then(resp => {
+                    console.log("email resp", resp.data)
+                }).catch(err => {
+                    console.log("err", err)
+                });
                 navigate('/confirmemail');
             }
         });

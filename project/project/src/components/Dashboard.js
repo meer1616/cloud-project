@@ -37,15 +37,15 @@ const Dashboard = () => {
         fetchData();
     }, []);
     if (loading) {
-        return <Box>Loading...</Box>
+        return <Text textAlign="center" fontSize="xl" mt="3">Loading...</Text>
     }
     return (
         <Box>
             <Box w="80%" m="auto" justifyContent="space-between" alignItems="center">
                 <Flex flexWrap="wrap" justifyContent="space-between">
-                    {spaces?.map((space) => {
+                    {spaces.length ? spaces?.map((space) => {
                         return (
-                            <Box border="1px solid lightgray" borderRadius="xl" p="20px" boxShadow="xl" m="20px" width="calc(33.333% - 40px)">
+                            <Box key={space.id} border="1px solid lightgray" borderRadius="xl" p="20px" boxShadow="xl" m="20px" width="calc(33.333% - 40px)">
 
                                 <Link to={{ pathname: `/testimonials/${space.id}` }} key={space.id} width="calc(33.333% - 40px)">
                                     <Flex flexDirection="column" alignItems="center">
@@ -56,7 +56,7 @@ const Dashboard = () => {
                                 </Link>
                             </Box>
                         )
-                    })}
+                    }) : <Text textAlign="center" fontSize="xl" mt="3">No space found</Text>}
                 </Flex>
             </Box>
         </Box>

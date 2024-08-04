@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
@@ -13,8 +13,8 @@ import { getCurrentUser } from "../services/getcurrentuser";
 import { FaStar } from "react-icons/fa";
 
 const schema = yup.object().shape({
-    name: yup.string().required('Space name is required'),
-    email: yup.string().required('Header title is required'),
+    name: yup.string().required('name is required'),
+    // email: yup.string().required('Header title is required'),
     testimonial: yup.string().required('Testimonial is required'),
     imageFile: yup.mixed().required('Image file is required').test('fileType', 'Only images are allowed', value => value && value[0] && value[0].type.includes('image')),
 });
@@ -29,6 +29,13 @@ const SendInText = ({ state }) => {
     const { spaceId } = useParams();
     const [loading, setLoading] = useState(false);
     const [starArr, setStarArr] = useState([false, false, false, false, false]);
+    const [useremail, setUseremail] = useState("")
+    useEffect(() => {
+        const currentUser = getCurrentUser();
+        console.log("currentUser", currentUser.idToken.payload.email);
+        setUseremail(currentUser.idToken.payload.email)
+    }, [])
+
     // console.log("params", params);
     const onSubmit = async (data) => {
         try {
@@ -55,7 +62,7 @@ const SendInText = ({ state }) => {
                         spaceId,
                         submitedByUserId: curUser.idToken.payload.sub,
                         name: data.name,
-                        email: data.email,
+                        email: curUser.idToken.payload.email,
                         testimonial: data.testimonial,
                         rating,
                         imageFile: imageURL
@@ -65,6 +72,12 @@ const SendInText = ({ state }) => {
                         console.log("resp", resp.data);
                         if (resp.data.success) {
                             console.log("success");
+                            axios.post(`${process.env.REACT_APP_BASE_URL}/publish-email`).then(resp => {
+                                console.log("res in publish email", resp.data);
+
+                            }).catch(err => {
+                                console.log("err", err);
+                            })
                             navigate("/");
                         }
                     }).catch(err => {
@@ -155,7 +168,7 @@ const SendInText = ({ state }) => {
                                 render={({ field }) => (
                                     <FormControl isInvalid={errors.email}>
                                         <FormLabel>Your Email</FormLabel>
-                                        <Input placeholder="john@gmail.com" {...field} />
+                                        <Input disabled={true} placeholder={useremail} {...field} />
                                         <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
                                     </FormControl>
                                 )}

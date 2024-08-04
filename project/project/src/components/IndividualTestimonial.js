@@ -25,7 +25,7 @@ const IndividualTestimonial = () => {
     }
 
     return (
-        <Box width="30vw">
+        <Box width="30vw" m="auto">
             <Box border="1px solid lightgray" boxShadow="xl" p="7" borderRadius="xl" w="100%" h="100%" position="relative">
                 <Box position="absolute" top="3" right="3" _hover={{ cursor: "pointer" }} >
                     {/* {activeTab === 'testimonials' && <FaHeart color={testimonial.isLoved ? "red" : "gray"} />} */}

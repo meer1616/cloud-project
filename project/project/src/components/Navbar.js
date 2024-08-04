@@ -1,4 +1,4 @@
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Box, Button, Flex, Text } from '@chakra-ui/react'
 import React from 'react'
 import { logout } from '../services/authenticate';
 
@@ -10,9 +10,9 @@ const Navbar = () => {
     };
 
     return (
-        <Box p="4" background="lightgray">
-            <Flex justifyContent="space-between" alignItems="center">
-                <Box>logo</Box>
+        <Box p="5" background="lightgray">
+            <Flex justifyContent="space-between" alignItems="center" w="95%" m="auto">
+                <Text fontSize="2xl">Testimonials</Text>
                 <Box>
                     <Button backgroundColor="black" color="white" onClick={handleLogOut}>
                         Logout
