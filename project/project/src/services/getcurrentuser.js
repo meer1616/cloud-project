@@ -5,7 +5,7 @@ import poolData from "../config/userpool"
 
 export const getCurrentUser = () => {
     const cognitoUser = poolData.getCurrentUser();
-    let userData = {};
+    let userData = "";
     if (cognitoUser) {
         cognitoUser.getSession((err, session) => {
             if (err) {

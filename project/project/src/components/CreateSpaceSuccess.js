@@ -16,7 +16,7 @@ const CreateSpaceSuccess = () => {
 
                 </Text>
                 <Text >Here is the link for your customers:</Text>
-                <Text color='blue'><Link to={{ pathname: `/${location.state.space.id}` }} state={location.state.space}> {process.env.REACT_APP_RUNNING_ENVIROMENT}{location.state.space.id}</Link></Text>
+                <Text color='blue'><Link to={{ pathname: `/${location.state.space.id}` }} state={location.state.space}> {window.location.origin}/{location.state.space.id}</Link></Text>
             </Box>
         </Flex>
     )

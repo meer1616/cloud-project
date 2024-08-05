@@ -36,18 +36,19 @@ const ConfirmEmail = () => {
         <Flex justifyContent="center" alignItems="center" h="100vh">
 
 
-            <Box border="1px solid lightgray" borderRadius="2xl" w="30%" m="0 auto" p="5" boxShadow="xl">
-                <Text textAlign="center" fontSize="xl" my="5">Check your inbox to confirm the email </Text>
+            <Box border="1px solid lightgray" borderRadius="2xl" w="32%" m="0 auto" p="10" boxShadow="xl">
+                <Text textAlign="center" fontSize="2xl" my="5" fontWeight="bolder">Check your inbox to confirm the email </Text>
+                <Text textAlign="center" fontSize="2xl" my="5"  fontWeight="bolder">Verify here </Text>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <Text mt="3">Email</Text>
-                        <Input type="email" {...register('email')} />
-                        {errors.email && <p>{errors.email.message}</p>}
+                        <Input type="email" {...register('email')} placeholder='johndoe@gmail.com' />
+                        {errors.email && <p style={{color:"red",margin:"4px 0"}}>{errors.email.message}</p>}
                     </div>
                     <div>
                         <Text mt="3">Confirmation Code</Text>
-                        <Input type="text" {...register('confirmationCode')} />
-                        {errors.confirmationCode && <p>{errors.confirmationCode.message}</p>}
+                        <Input type="text" {...register('confirmationCode')} placeholder='123456'/>
+                        {errors.confirmationCode && <p  style={{color:"red",margin:"4px 0"}}>{errors.confirmationCode.message}</p>}
                     </div>
                     <br />
 

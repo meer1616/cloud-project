@@ -32,6 +32,9 @@ const SendInText = ({ state }) => {
     const [useremail, setUseremail] = useState("")
     useEffect(() => {
         const currentUser = getCurrentUser();
+        if(!currentUser){
+            navigate("/login")
+        }
         console.log("currentUser", currentUser.idToken.payload.email);
         setUseremail(currentUser.idToken.payload.email)
     }, [])
@@ -103,7 +106,7 @@ const SendInText = ({ state }) => {
 
     return (
         <>
-            <Button onClick={onOpen} backgroundColor='black' color="white">Send in text</Button>
+            <Button w="100%" onClick={onOpen} backgroundColor='black' color="white">Send in text</Button>
 
             <Modal isOpen={isOpen} onClose={onClose} size="xl" >
                 <ModalOverlay />

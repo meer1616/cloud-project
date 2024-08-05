@@ -1,6 +1,7 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react'
+import { Box, Button, Flex } from '@chakra-ui/react'
 import React from 'react'
 import { logout } from '../services/authenticate';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -10,14 +11,18 @@ const Navbar = () => {
     };
 
     return (
-        <Box p="5" background="lightgray">
+        <Box p="5" background="black" color="white">
             <Flex justifyContent="space-between" alignItems="center" w="95%" m="auto">
-                <Text fontSize="2xl">Testimonials</Text>
-                <Box>
-                    <Button backgroundColor="black" color="white" onClick={handleLogOut}>
+                {/* <Text fontSize="2xl"></Text> */}
+                <Link to={{ pathname: `/` }} style={{margin:"0 25px",fontSize:"22px"}}>
+                Testimonials
+                </Link>
+                <Flex alignItems="center" justifyContent="center">
+
+                    <Button backgroundColor="white" color="black" onClick={handleLogOut}>
                         Logout
                     </Button>
-                </Box>
+                </Flex>
             </Flex>
 
         </Box>

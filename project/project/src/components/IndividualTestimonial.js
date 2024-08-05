@@ -6,8 +6,9 @@ import { FaStar } from 'react-icons/fa'
 import { useParams } from 'react-router-dom';
 
 const IndividualTestimonial = () => {
-    const { testimonialId } = useParams();
+    const { testimonialId,spaceId } = useParams();
     const [testimonial, setTestimonial] = useState(null);
+    const [space, setSpace] = useState(null);
 
     useEffect(() => {
         // Fetch testimonial data based on id
@@ -18,6 +19,15 @@ const IndividualTestimonial = () => {
         }).catch(err => {
             console.log(err);
         })
+        
+        axios.post(`${process.env.REACT_APP_BASE_URL}/get-space-by-id`, { id: spaceId }).then(resp => {
+
+            console.log("resp.data", resp.data);
+            setSpace(JSON.parse(resp.data.body))
+        }).catch(err => {
+            console.log(err);
+        })
+
     }, []);
 
     if (!testimonial) {
@@ -25,8 +35,10 @@ const IndividualTestimonial = () => {
     }
 
     return (
-        <Box width="30vw" m="auto">
-            <Box border="1px solid lightgray" boxShadow="xl" p="7" borderRadius="xl" w="100%" h="100%" position="relative">
+        <Flex h="100vh" justifyContent="center" alignItems="center" >
+
+        <Box width="100vw"  h="100%" border="1px solid lightgray" borderRadius="xl"m="3">
+            <Box  boxShadow="xl" p="7"  w="100%" h="100%" position="relative">
                 <Box position="absolute" top="3" right="3" _hover={{ cursor: "pointer" }} >
                     {/* {activeTab === 'testimonials' && <FaHeart color={testimonial.isLoved ? "red" : "gray"} />} */}
                 </Box>
@@ -41,8 +53,8 @@ const IndividualTestimonial = () => {
                         </Box>
                     ))}
                 </Flex>
-                <Image borderRadius="5px" m="auto" src={testimonial.imageFile} alt="Image" h="45vh" w="100%"></Image>
-                <Text my="3" fontSize="large">{testimonial.testimonial}</Text>
+                <Image borderRadius="15px" border="1px solid lightgray" m="auto" src={space.imageFile} alt="Image" h="45vh" w="100%"></Image>
+                <Text my="3" fontSize="large" fontWeight="bolder">{testimonial.testimonial}</Text>
                 {/* <Text textAlign="left">Email: {testimonial.email}</Text> */}
                 {/* <Box>
                     <Button >Generate Iframe</Button> */}
@@ -50,6 +62,7 @@ const IndividualTestimonial = () => {
                 {/* </Box> */}
             </Box>
         </Box>
+                    </Flex>
     )
 }
 

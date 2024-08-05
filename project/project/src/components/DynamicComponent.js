@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import SendInText from './SendInText';
 import axios from "axios"
+import Navbar from './Navbar';
 const DynamicComponent = () => {
     const { spaceId } = useParams();
     // const { state } = useLocation();
@@ -28,7 +29,9 @@ const DynamicComponent = () => {
 
     }, []);
     return (
-        <Flex justifyContent="center" alignItems="center" h="100vh">
+        <>
+        <Navbar/>
+        <Flex justifyContent="center" alignItems="center" h="90vh">
 
             <Box border="1px solid lightgray" boxShadow="xl" borderRadius="xl" p="7">
                 <Image border="1px solid lightgray" borderRadius="xl" src={state.imageFile} alt="image" h="25vh" m="auto" />
@@ -51,6 +54,7 @@ const DynamicComponent = () => {
                 </Center>
             </Box>
         </Flex>
+        </>
     )
 }
 
