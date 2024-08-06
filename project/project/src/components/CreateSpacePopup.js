@@ -39,13 +39,21 @@ const CreatSpacePopup = () => {
                     console.log("curUser", curUser);
                     const uploadResponse = await axios.post(`${process.env.REACT_APP_BASE_URL}/img-upload`, {
                         body: reader.result
+                    }, {
+                        headers: {
+                            "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+                        }
                     });
                     const imageURL = JSON.parse(uploadResponse.data.body).url;
                     console.log("imageURL", imageURL);
 
                     const userData = { id: uuidv4(), userId: curUser.idToken.payload.sub, spaceName: data.spaceName, headerTitle: data.headerTitle, message: data.message, imageFile: imageURL };
                     console.log("userData", userData);
-                    await axios.post(`${process.env.REACT_APP_BASE_URL}/create-space`, userData).then(resp => {
+                    await axios.post(`${process.env.REACT_APP_BASE_URL}/create-space`, userData, {
+                        headers: {
+                            "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+                        }
+                    }).then(resp => {
                         console.log("resp", resp.data);
                         if (resp.data.success) {
                             navigate("/createspacesuccess", { state: { space: resp.data.body.data } });

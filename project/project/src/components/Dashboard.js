@@ -19,11 +19,12 @@ const Dashboard = () => {
             axios.post(`${process.env.REACT_APP_BASE_URL}/get-space-of-a-user`, {
                 userId: curUser?.idToken?.payload?.sub
             },
-                // {
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     }
-                // }
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${curUser?.idToken?.jwtToken}`
+                    }
+                }
             ).then(resp => {
                 console.log("resp", JSON.parse(resp.data.body));
                 setSpaces(JSON.parse(resp.data.body));

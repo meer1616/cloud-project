@@ -32,7 +32,7 @@ const SendInText = ({ state }) => {
     const [useremail, setUseremail] = useState("")
     useEffect(() => {
         const currentUser = getCurrentUser();
-        if(!currentUser){
+        if (!currentUser) {
             navigate("/login")
         }
         console.log("currentUser", currentUser.idToken.payload.email);
@@ -51,6 +51,10 @@ const SendInText = ({ state }) => {
                     console.log("curUser", curUser);
                     const uploadResponse = await axios.post(`${process.env.REACT_APP_BASE_URL}/img-upload`, {
                         body: reader.result
+                    }, {
+                        headers: {
+                            "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+                        }
                     });
                     const imageURL = JSON.parse(uploadResponse.data.body).url;
                     console.log("imageURL", imageURL);
@@ -71,7 +75,11 @@ const SendInText = ({ state }) => {
                         imageFile: imageURL
                     };
                     console.log("userData", userData);
-                    await axios.post(`${process.env.REACT_APP_BASE_URL}/testimonials`, userData).then(resp => {
+                    await axios.post(`${process.env.REACT_APP_BASE_URL}/testimonials`, userData, {
+                        headers: {
+                            "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+                        }
+                    }).then(resp => {
                         console.log("resp", resp.data);
                         if (resp.data.success) {
                             console.log("success");

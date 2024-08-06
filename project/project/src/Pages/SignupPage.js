@@ -52,7 +52,7 @@ const SignupPage = () => {
         <Flex alignItems="center" justifyContent="center" h="100vh">
 
             <Box boxShadow="xl" style={{ border: "1px solid lightgray", padding: "50px", borderRadius: "25px", maxWidth: '400px', margin: '0 auto' }}>
-            <Text fontSize="3xl" textAlign="center"my="5" fontWeight="bold">Testimonial Creation</Text>
+                <Text fontSize="3xl" textAlign="center" my="5" fontWeight="bold">Testimonial Creation</Text>
                 <Text fontSize="x-large" textAlign="center" fontWeight="bolder">Register here</Text>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div style={{ marginTop: "10px" }}>

@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar"
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaStar, FaHeart } from "react-icons/fa";
+import { getCurrentUser } from '../services/getcurrentuser';
 
 const TestimonialOuter = () => {
     const { spaceId } = useParams();
@@ -12,7 +13,7 @@ const TestimonialOuter = () => {
     const [changedIsLove, setChangedIsLove] = useState(false);
     const [activeTab, setActiveTab] = useState("testimonials");
     // const [selectedTestimonial, setSelectedTestimonial] = useState(null);
-
+    const curUser = getCurrentUser();
     const handleGenerateIframe = async (testimonial) => {
         // setSelectedTestimonial(testimonial);
 
@@ -40,7 +41,11 @@ const TestimonialOuter = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/get-testimonial-of-space`, { spaceId });
+                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/get-testimonial-of-space`, { spaceId }, {
+                    headers: {
+                        "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+                    }
+                });
                 setTestimonials(JSON.parse(response.data.body));
             } catch (err) {
                 console.log(err);
@@ -52,7 +57,11 @@ const TestimonialOuter = () => {
     useEffect(() => {
         const fetchSpaceData = async () => {
             try {
-                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/get-space-by-id`, { id: spaceId });
+                const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/get-space-by-id`, { id: spaceId }, {
+                    headers: {
+                        "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+                    }
+                });
                 setSpaceObj(JSON.parse(response.data.body));
 
             } catch (err) {
@@ -63,7 +72,11 @@ const TestimonialOuter = () => {
     }, [spaceId]);
 
     const handleLovedUpdate = (id, isLoved) => {
-        axios.post(`${process.env.REACT_APP_BASE_URL}/update-testimonial`, { id, isLoved: !isLoved }).then(() => {
+        axios.post(`${process.env.REACT_APP_BASE_URL}/update-testimonial`, { id, isLoved: !isLoved }, {
+            headers: {
+                "Authorization": `Bearer ${curUser.idToken.jwtToken}`
+            }
+        }).then(() => {
             setChangedIsLove(old => !old);
         }).catch(err => {
             console.log(err);
